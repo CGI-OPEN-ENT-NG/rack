@@ -34,12 +34,12 @@ Behaviours.register('rack', {
         return [];
     },
     loadResources: function (callback) {
-        http().get('/rack/list').done(function (rack) {
-            this.resources = _.map(_.where(rack, { trashed: 0 }), function (rack) {
-                rack.icon = rack.icon || '/img/illustrations/rack-default.png';
+        http().get('/rack/list').done(function (racks) {
+            this.resources = _.map(racks, function (rack) {
+                rack.icon = rack.icon || '/img/illustrations/image-default.svg';
                 return {
-                    title: rack.title,
-                    owner: rack.owner,
+                    title: rack.name,
+                    owner: { name: rack.fromName, userId: rack.to },
                     icon: rack.icon,
                     path: '/rack#/view-rack/' + rack._id,
                     _id: rack._id
@@ -49,5 +49,3 @@ Behaviours.register('rack', {
         }.bind(this));
     }
 });
-
-//# sourceMappingURL=behaviours.js.map
